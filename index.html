@@ -288,23 +288,116 @@
 
   /* ---------- MODAL ---------- */
   .modal-overlay{
-    position:fixed;inset:0;background:rgba(8,12,24,0.6);z-index:100;
-    display:none;align-items:center;justify-content:center;padding:24px;
+    position:fixed;inset:0;background:rgba(8,12,24,0.72);z-index:100;
+    display:none;align-items:flex-start;justify-content:center;padding:32px 16px;
+    overflow-y:auto;
   }
   .modal-overlay.open{display:flex;}
   .modal-box{
-    background:#fff;border-radius:16px;
-    max-width:680px;max-height:80vh;overflow-y:auto;padding:40px;position:relative;
+    background:#fff;border-radius:20px;
+    width:100%;max-width:760px;padding:0;position:relative;
+    box-shadow:0 24px 80px rgba(14,20,38,0.22);
+    margin:auto;
   }
-  .modal-box h2{font-size:1.5rem;margin-bottom:18px;}
-  .modal-box h3{font-size:1.05rem;margin:22px 0 8px;color:var(--teal-deep);}
-  .modal-box p,.modal-box li{color:var(--ink-dim);font-size:0.92rem;margin-bottom:8px;}
-  .modal-box ul{padding-left:20px;}
+  /* Aviso de privacidad — cabecera */
+  .privacy-header{
+    background:var(--navy);border-radius:20px 20px 0 0;
+    padding:36px 48px 32px;
+  }
+  .privacy-header .eyebrow-modal{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--teal-soft);font-weight:700;margin-bottom:10px;
+  }
+  .privacy-header h2{
+    font-family:'Sora',sans-serif;font-size:1.6rem;font-weight:700;
+    color:#fff;margin:0 0 6px;
+  }
+  .privacy-header p{
+    font-size:0.85rem;color:#AEB9CC;margin:0;
+  }
+  /* Cuerpo del aviso */
+  .privacy-body{
+    padding:40px 48px 48px;
+  }
+  @media(max-width:600px){
+    .privacy-header{padding:28px 24px 24px;}
+    .privacy-body{padding:28px 24px 36px;}
+  }
+  /* Secciones numeradas */
+  .privacy-section{
+    border-left:3px solid var(--teal);
+    padding:0 0 0 18px;
+    margin-bottom:32px;
+  }
+  .privacy-section:last-child{margin-bottom:0;}
+  .privacy-section h3{
+    font-family:'Sora',sans-serif;font-size:0.95rem;font-weight:700;
+    color:var(--navy);margin-bottom:10px;letter-spacing:-0.01em;
+  }
+  .privacy-section p{
+    font-size:0.88rem;color:var(--ink-dim);margin-bottom:8px;line-height:1.65;
+  }
+  .privacy-section ul{
+    padding-left:18px;margin-bottom:8px;
+  }
+  .privacy-section ul li{
+    font-size:0.88rem;color:var(--ink-dim);margin-bottom:5px;line-height:1.6;
+  }
+  /* Tabla ARCO */
+  .privacy-table{
+    width:100%;border-collapse:collapse;margin:12px 0;font-size:0.85rem;
+  }
+  .privacy-table th{
+    background:var(--bg-alt);color:var(--navy);font-weight:700;
+    padding:10px 14px;text-align:left;border:1px solid var(--line);
+    font-family:'Sora',sans-serif;font-size:0.82rem;
+  }
+  .privacy-table td{
+    padding:10px 14px;border:1px solid var(--line);color:var(--ink-dim);
+    vertical-align:top;line-height:1.5;
+  }
+  .privacy-table tr:nth-child(even) td{background:#FAFCFE;}
+  /* Alerta de datos sensibles */
+  .privacy-alert{
+    background:#EDF9FB;border:1px solid #B0E4EC;border-radius:10px;
+    padding:14px 18px;margin:12px 0;
+    display:flex;gap:12px;align-items:flex-start;
+  }
+  .privacy-alert-icon{
+    font-size:1.1rem;flex-shrink:0;margin-top:1px;
+  }
+  .privacy-alert p{
+    font-size:0.85rem;color:var(--teal-deep);margin:0;line-height:1.55;font-weight:500;
+  }
+  /* Pie del aviso */
+  .privacy-footer{
+    background:var(--bg-alt);border-top:1px solid var(--line);
+    border-radius:0 0 20px 20px;padding:20px 48px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+  @media(max-width:600px){.privacy-footer{padding:18px 24px;}}
+  .privacy-footer p{font-size:0.78rem;color:var(--ink-faint);margin:0;}
+  .privacy-footer a{color:var(--teal-deep);font-weight:600;}
+  /* Botón cerrar */
   .modal-close{
-    position:absolute;top:20px;right:20px;background:none;border:none;color:var(--ink-faint);
-    font-size:1.4rem;cursor:pointer;line-height:1;
+    position:absolute;top:18px;right:18px;
+    background:rgba(255,255,255,0.12);border:none;color:#fff;
+    width:34px;height:34px;border-radius:50%;font-size:1.2rem;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:background 0.2s;line-height:1;
   }
-  .modal-close:hover{color:var(--navy);}
+  .modal-close:hover{background:rgba(255,255,255,0.22);}
+  /* Modal genérico (nosotros) */
+  .modal-box-generic{
+    background:#fff;border-radius:16px;
+    max-width:680px;max-height:85vh;overflow-y:auto;padding:40px;position:relative;
+    width:100%;margin:auto;
+  }
+  .modal-box-generic h2{font-size:1.5rem;margin-bottom:18px;font-family:'Sora',sans-serif;color:var(--navy);}
+  .modal-box-generic h3{font-size:1.05rem;margin:22px 0 8px;color:var(--teal-deep);font-family:'Sora',sans-serif;}
+  .modal-box-generic p,.modal-box-generic li{color:var(--ink-dim);font-size:0.92rem;margin-bottom:8px;}
+  .modal-box-generic ul{padding-left:20px;}
 </style>
 </head>
 <body>
@@ -324,7 +417,7 @@
     </div>
     <div class="nav-actions">
       <a href="#" id="open-nosotros" class="btn-ghost-nav">Nosotros</a>
-      <a href="https://application.tiempolibreapp.com/login" target="_blank" rel="noopener" class="btn-ghost-nav" id="login-link">Iniciar sesión</a>
+      <a href="https://tiempolibreapp.com/login" target="_blank" rel="noopener" class="btn-ghost-nav" id="login-link">Iniciar sesión</a>
       <a href="#registro" class="nav-cta">Contacto</a>
     </div>
   </nav>
@@ -537,7 +630,7 @@
           <div class="row2">
             <div class="field">
               <label for="tel">Teléfono / WhatsApp</label>
-              <input type="tel" id="tel" name="tel" required autocomplete="tel" placeholder="33 1231 8201">
+              <input type="tel" id="tel" name="tel" required autocomplete="tel" placeholder="10 dígitos, ej. 33 1234 5678">
             </div>
             <div class="field">
               <label for="email">Correo</label>
@@ -592,28 +685,186 @@
 <!-- MODAL PRIVACIDAD -->
 <div class="modal-overlay" id="privacy-modal">
   <div class="modal-box">
-    <button class="modal-close" id="close-privacy" aria-label="Cerrar">×</button>
-    <h2>Aviso de privacidad</h2>
-    <p>TiempoLibre ("nosotros") respeta tu privacidad y se compromete a proteger los datos personales que nos compartes a través de este sitio, conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.</p>
+    <!-- Cabecera -->
+    <div class="privacy-header">
+      <button class="modal-close" id="close-privacy" aria-label="Cerrar">×</button>
+      <div class="eyebrow-modal">🔒 Protección de datos</div>
+      <h2>Aviso de Privacidad</h2>
+      <p>Tiempo Libre Sistema Integral de Servicios Logísticos S.A.S. &nbsp;·&nbsp; RFC: TLS1806066U9 &nbsp;·&nbsp; Versión 1.0, vigente desde el 1 de enero de 2026</p>
+    </div>
 
-    <h3>Datos que recopilamos</h3>
-    <p>Al llenar el formulario de contacto recopilamos: nombre, nombre de tu negocio, giro, teléfono, correo electrónico y la información adicional que decidas compartirnos sobre tu operación.</p>
+    <!-- Cuerpo -->
+    <div class="privacy-body">
 
-    <h3>Para qué usamos tus datos</h3>
-    <ul>
-      <li>Contactarte desde nuestro equipo de ventas para presentarte el servicio</li>
-      <li>Dar seguimiento comercial a tu solicitud</li>
-      <li>Mejorar nuestro servicio y entender las necesidades de negocios como el tuyo</li>
-    </ul>
+      <div class="privacy-section">
+        <h3>I. Identidad y Domicilio del Responsable</h3>
+        <p>Tiempo Libre Sistema Integral de Servicios Logísticos S.A.S. (en adelante, <strong>TiempoLibre</strong>), con RFC TLS1806066U9, con domicilio en la Zona Metropolitana de Guadalajara, Jalisco, México, es responsable del tratamiento de sus Datos Personales conforme a lo establecido en la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP), su Reglamento y los Lineamientos del Aviso de Privacidad emitidos por el INAI.</p>
+      </div>
 
-    <h3>Con quién compartimos tus datos</h3>
-    <p>No vendemos ni compartimos tus datos con terceros ajenos a TiempoLibre. Tu información se usa únicamente para fines comerciales internos de nuestro equipo.</p>
+      <div class="privacy-section">
+        <h3>II. Datos Personales que Recabamos</h3>
+        <p><strong>Datos de identificación:</strong></p>
+        <ul>
+          <li>Nombre completo o razón social del negocio</li>
+          <li>RFC</li>
+          <li>Identificación oficial del representante legal o dueño</li>
+        </ul>
+        <p><strong>Datos de contacto:</strong></p>
+        <ul>
+          <li>Correo electrónico</li>
+          <li>Número de teléfono de operación</li>
+          <li>Dirección del establecimiento</li>
+        </ul>
+        <p><strong>Datos financieros:</strong></p>
+        <ul>
+          <li>Método de pago utilizado</li>
+          <li>Historial de transacciones dentro de la Plataforma</li>
+          <li>Saldo de Billetera Digital</li>
+        </ul>
+        <p><strong>Datos de operación:</strong></p>
+        <ul>
+          <li>Historial de entregas solicitadas</li>
+          <li>Direcciones de entrega utilizadas</li>
+          <li>Calificaciones otorgadas a los Repartidores Aliados</li>
+          <li>Evidencia fotográfica relacionada con solicitudes de reembolso</li>
+        </ul>
+        <p><strong>Datos técnicos:</strong></p>
+        <ul>
+          <li>Tipo de dispositivo y sistema operativo</li>
+          <li>Dirección IP y datos de navegación</li>
+          <li>Datos de geolocalización del establecimiento del Cliente</li>
+        </ul>
+        <div class="privacy-alert">
+          <span class="privacy-alert-icon">✅</span>
+          <p>TiempoLibre <strong>no recaba ni trata datos personales sensibles</strong> de sus Clientes, tales como información sobre origen racial o étnico, estado de salud, creencias religiosas, afiliación sindical, opiniones políticas o preferencia sexual.</p>
+        </div>
+      </div>
 
-    <h3>Tus derechos (ARCO)</h3>
-    <p>Puedes solicitar acceso, rectificación, cancelación u oposición al uso de tus datos personales en cualquier momento, escribiéndonos a contacto@tiempolibreapp.com.</p>
+      <div class="privacy-section">
+        <h3>III. Finalidades del Tratamiento</h3>
+        <p><strong>Finalidades primarias</strong> — necesarias para la prestación del Servicio:</p>
+        <ul>
+          <li>Crear y administrar la cuenta del Cliente en la Plataforma</li>
+          <li>Gestionar y ejecutar los Servicios de logística urbana contratados</li>
+          <li>Procesar pagos de Membresías, Paquetes de Entregas y servicios adicionales</li>
+          <li>Emitir comprobantes fiscales digitales (CFDI)</li>
+          <li>Gestionar solicitudes de reembolso y resolver incidencias operativas</li>
+          <li>Asignar Repartidores Aliados a las solicitudes de entrega</li>
+          <li>Enviar notificaciones sobre el estado de los pedidos en tiempo real</li>
+          <li>Cumplir con obligaciones legales y regulatorias aplicables</li>
+        </ul>
+        <p><strong>Finalidades secundarias</strong> — mejoran la experiencia pero no son necesarias:</p>
+        <ul>
+          <li>Enviar comunicaciones sobre nuevos planes, servicios y promociones</li>
+          <li>Realizar encuestas de satisfacción sobre el Servicio</li>
+          <li>Elaborar estadísticas e informes internos de desempeño operativo</li>
+          <li>Mejorar la Plataforma con base en el análisis de datos de uso</li>
+        </ul>
+        <p>Si no deseas que tus datos sean usados para finalidades secundarias, escríbenos a <a href="mailto:privacidad@tiempolibreapp.com" style="color:var(--teal-deep);font-weight:600;">privacidad@tiempolibreapp.com</a> dentro de los 5 días hábiles siguientes a la primera utilización de la Plataforma.</p>
+      </div>
 
-    <h3>Cambios a este aviso</h3>
-    <p>Podemos actualizar este aviso de privacidad. Cualquier cambio será publicado en esta misma página.</p>
+      <div class="privacy-section">
+        <h3>IV. Transferencia de Datos Personales</h3>
+        <p>TiempoLibre podrá transferir los Datos Personales del Cliente, sin requerir su consentimiento, únicamente en los siguientes casos:</p>
+        <ul>
+          <li>A autoridades competentes en cumplimiento de obligaciones legales o resoluciones judiciales</li>
+          <li>A proveedores de servicios de tecnología que operan la infraestructura de la Plataforma, bajo contratos con cláusulas de confidencialidad y protección de datos</li>
+        </ul>
+        <p>En ningún caso TiempoLibre venderá, alquilará ni comercializará los Datos Personales de sus Clientes a terceros con fines publicitarios o comerciales.</p>
+      </div>
+
+      <div class="privacy-section">
+        <h3>V. Derechos ARCO</h3>
+        <p>El Cliente tiene derecho a Acceder, Rectificar, Cancelar u Oponerse al tratamiento de sus Datos Personales, así como a revocar el consentimiento otorgado en cualquier momento.</p>
+        <table class="privacy-table">
+          <thead>
+            <tr>
+              <th>Derecho</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Acceso</strong></td>
+              <td>Conocer qué Datos Personales posee TiempoLibre y cómo los utiliza.</td>
+            </tr>
+            <tr>
+              <td><strong>Rectificación</strong></td>
+              <td>Solicitar la corrección de Datos Personales inexactos o incompletos.</td>
+            </tr>
+            <tr>
+              <td><strong>Cancelación</strong></td>
+              <td>Solicitar la eliminación de los Datos Personales cuando ya no sean necesarios.</td>
+            </tr>
+            <tr>
+              <td><strong>Oposición</strong></td>
+              <td>Oponerse al tratamiento de sus Datos Personales para finalidades específicas.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><strong>Procedimiento:</strong> Envía tu solicitud a <a href="mailto:privacidad@tiempolibreapp.com" style="color:var(--teal-deep);font-weight:600;">privacidad@tiempolibreapp.com</a> indicando tu nombre completo, correo registrado y descripción clara del derecho que deseas ejercer. TiempoLibre dará respuesta en un plazo máximo de 20 días hábiles.</p>
+      </div>
+
+      <div class="privacy-section">
+        <h3>VI. Medidas de Seguridad</h3>
+        <p>TiempoLibre implementa medidas administrativas, técnicas y físicas para proteger tus Datos Personales, que incluyen:</p>
+        <ul>
+          <li>Cifrado de datos sensibles en tránsito y en reposo</li>
+          <li>Control de acceso basado en roles para el personal interno</li>
+          <li>Respaldo automático de la base de datos cada 24 horas</li>
+          <li>Protocolos de respuesta ante incidentes de seguridad</li>
+          <li>Actualización periódica de contraseñas y credenciales de acceso administrativo</li>
+        </ul>
+      </div>
+
+      <div class="privacy-section">
+        <h3>VII. Uso de Cookies y Tecnologías Similares</h3>
+        <p>La Plataforma TiempoLibre puede utilizar cookies y tecnologías similares para mejorar la experiencia del usuario, analizar el uso de la Plataforma y recordar preferencias. El Cliente puede configurar su dispositivo para rechazar el uso de cookies, aunque esto podría afectar algunas funcionalidades.</p>
+      </div>
+
+      <div class="privacy-section">
+        <h3>VIII. Cambios al Aviso de Privacidad</h3>
+        <p>TiempoLibre podrá modificar el presente Aviso en cualquier momento, notificando al Cliente a través de la Plataforma o al correo electrónico registrado. El uso continuado de la Plataforma tras la notificación constituirá aceptación de las modificaciones.</p>
+      </div>
+
+      <div class="privacy-section">
+        <h3>IX. Contacto para Asuntos de Privacidad</h3>
+        <table class="privacy-table">
+          <thead>
+            <tr>
+              <th>Concepto</th>
+              <th>Dato</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Correo electrónico</td>
+              <td><a href="mailto:privacidad@tiempolibreapp.com" style="color:var(--teal-deep);font-weight:600;">privacidad@tiempolibreapp.com</a></td>
+            </tr>
+            <tr>
+              <td>Domicilio</td>
+              <td>Zona Metropolitana de Guadalajara, Jalisco, México</td>
+            </tr>
+            <tr>
+              <td>Teléfono de contacto</td>
+              <td>A través de la Plataforma TiempoLibre</td>
+            </tr>
+            <tr>
+              <td>Horario de atención</td>
+              <td>Lunes a Viernes 12:00 pm – 6:00 pm</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /privacy-body -->
+
+    <!-- Pie -->
+    <div class="privacy-footer">
+      <p>Tiempo Libre Sistema Integral de Servicios Logísticos S.A.S. &nbsp;·&nbsp; RFC: TLS1806066U9</p>
+      <p><strong>SOMOS TU SISTEMA DE REPARTO</strong></p>
+    </div>
+
   </div>
 </div>
 
@@ -642,35 +893,55 @@
   document.getElementById('close-nosotros').addEventListener('click', ()=> nosotrosModal.classList.remove('open'));
   nosotrosModal.addEventListener('click', e=>{ if(e.target === nosotrosModal) nosotrosModal.classList.remove('open'); });
 
-  // Formulario — PLACEHOLDER de envio.
-  // Cuando el endpoint de backend este listo, reemplazar este bloque
-  // por un fetch() a la URL real (ej. https://tiempolibreapp.com/api/public/leads)
+  // Formulario — envía los datos capturados como mensaje precargado a WhatsApp.
+  // No requiere backend: usa el número oficial de contacto (3312318201).
   const form = document.getElementById('lead-form');
   const statusEl = document.getElementById('form-status');
   const submitBtn = document.getElementById('submit-btn');
+  const WHATSAPP_NUMBER = '523312318201';
 
   form.addEventListener('submit', function(e){
     e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Enviando...';
+    submitBtn.textContent = 'Redirigiendo a WhatsApp...';
 
     const data = {
-      nombre: form.nombre.value,
-      empresa: form.empresa.value,
-      giro: form.giro.value,
-      tel: form.tel.value,
-      email: form.email.value,
-      notas: form.notas.value
+      nombre: form.nombre.value.trim(),
+      empresa: form.empresa.value.trim(),
+      giro: form.giro.value.trim(),
+      tel: form.tel.value.trim(),
+      email: form.email.value.trim(),
+      notas: form.notas.value.trim()
     };
 
+    const lineas = [
+      'Hola, quiero información de TiempoLibre.',
+      'Nombre: ' + data.nombre,
+      data.empresa ? 'Negocio: ' + data.empresa : null,
+      data.giro ? 'Giro: ' + data.giro : null,
+      'Teléfono: ' + data.tel,
+      data.email ? 'Correo: ' + data.email : null,
+      data.notas ? 'Entregas/mes aprox.: ' + data.notas : null
+    ].filter(Boolean);
+
+    const mensaje = encodeURIComponent(lineas.join('\n'));
+    const url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + mensaje;
+
+    statusEl.textContent = 'Gracias, ' + (data.nombre.split(' ')[0] || '') + '. Te estamos llevando a WhatsApp para continuar la conversación.';
+    statusEl.className = 'ok';
+
     setTimeout(()=>{
-      console.log('Lead capturado (placeholder, aun sin backend):', data);
-      statusEl.textContent = 'Gracias, ' + (data.nombre.split(' ')[0] || '') + '. Nuestro equipo de ventas te contactará muy pronto.';
-      statusEl.className = 'ok';
+      window.open(url, '_blank');
       form.reset();
       submitBtn.disabled = false;
       submitBtn.textContent = 'Hablar con ventas';
-    }, 700);
+    }, 500);
   });
 </script>
 
