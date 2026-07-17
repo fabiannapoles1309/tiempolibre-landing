@@ -442,7 +442,7 @@
       <a href="https://wa.me/523312318201" target="_blank" rel="noopener">ÚNETE AL EQUIPO</a>
     </div>
     <div class="nav-actions">
-      <a href="#mision" class="btn-ghost-nav">Nosotros</a>
+      <a href="#" id="open-nosotros" class="btn-ghost-nav">Nosotros</a>
       <a href="https://application.tiempolibreapp.com/login" target="_blank" rel="noopener" class="btn-ghost-nav" id="login-link">Iniciar sesión</a>
       <a href="#registro" class="nav-cta">Contacto</a>
     </div>
@@ -900,6 +900,16 @@
   </div>
 </div>
 
+<!-- MODAL NOSOTROS -->
+<div class="modal-overlay" id="nosotros-modal">
+  <div class="modal-box modal-box-generic">
+    <button class="modal-close" id="close-nosotros" aria-label="Cerrar">&times;</button>
+    <h2>Nosotros</h2>
+    <p>En TiempoLibre desarrollamos tecnología para conectar negocios con repartidores independientes, creando soluciones logísticas eficientes, confiables y diseñadas para impulsar el crecimiento de nuestros aliados.</p>
+    <p>Nuestro modelo B2B permite a las empresas optimizar sus entregas de última milla sin invertir en flotillas propias ni pagar altas comisiones, apoyándose en una plataforma tecnológica que simplifica la operación y mejora la experiencia de entrega.</p>
+  </div>
+</div>
+
 <!-- MODAL MISIÓN -->
 <div class="modal-overlay" id="mision-modal">
   <div class="modal-box modal-box-generic">
@@ -945,6 +955,7 @@
   modal.addEventListener('click', e=>{ if(e.target === modal) modal.classList.remove('open'); });
 
   [
+    { openId: 'open-nosotros', modalId: 'nosotros-modal', closeId: 'close-nosotros' },
     { openId: 'open-mision', modalId: 'mision-modal', closeId: 'close-mision' },
     { openId: 'open-vision', modalId: 'vision-modal', closeId: 'close-vision' },
     { openId: 'open-valores', modalId: 'valores-modal', closeId: 'close-valores' }
