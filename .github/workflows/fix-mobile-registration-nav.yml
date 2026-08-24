@@ -1,0 +1,46 @@
+name: Fix mobile registration navigation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-mobile-registration-nav.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-mobile-nav:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Add mobile registration buttons
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          text = p.read_text(encoding='utf-8')
+
+          css_old = "  @media (max-width:520px){.nav-actions .btn-ghost-nav{padding:9px 12px;font-size:0.82rem;}}"
+          css_new = """  .mobile-register{display:none;}\n  @media (max-width:880px){\n    nav{align-items:flex-start;gap:12px;}\n    .nav-actions{max-width:270px;}\n    .mobile-register{display:inline-flex;}\n  }\n  @media (max-width:520px){\n    nav{padding:14px 16px;gap:10px;}\n    .logo-text{font-size:1.05rem;}\n    .nav-actions{gap:8px;max-width:235px;}\n    .nav-actions .btn-ghost-nav,.nav-actions .nav-cta{padding:9px 12px;font-size:0.82rem;}\n    .mobile-register{font-weight:700;}\n  }"""
+          if css_old not in text:
+              raise SystemExit('No se encontró el bloque CSS móvil esperado; no se modificó index.html')
+          text = text.replace(css_old, css_new, 1)
+
+          html_old = """    <div class=\"nav-actions\">\n      <a href=\"#\" id=\"open-nosotros\" class=\"btn-ghost-nav\">Nosotros</a>\n      <a href=\"https://application.tiempolibreapp.com/login\" target=\"_blank\" rel=\"noopener\" class=\"btn-ghost-nav\" id=\"login-link\">Iniciar sesión</a>"""
+          html_new = """    <div class=\"nav-actions\">\n      <a href=\"registro.html\" class=\"btn-ghost-nav mobile-register\">Registrarme</a>\n      <a href=\"repartidores.html\" class=\"btn-ghost-nav mobile-register\">Quiero repartir</a>\n      <a href=\"#\" id=\"open-nosotros\" class=\"btn-ghost-nav\">Nosotros</a>\n      <a href=\"https://application.tiempolibreapp.com/login\" target=\"_blank\" rel=\"noopener\" class=\"btn-ghost-nav\" id=\"login-link\">Iniciar sesión</a>"""
+          if html_old not in text:
+              raise SystemExit('No se encontró nav-actions esperado; no se modificó index.html')
+          text = text.replace(html_old, html_new, 1)
+          p.write_text(text, encoding='utf-8')
+          PY
+      - name: Commit mobile fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "fix: mostrar registro en navegación móvil"
+          git push origin main
