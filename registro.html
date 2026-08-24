@@ -20,7 +20,9 @@
       <div class="field"><label>Nombre del establecimiento</label><input id="businessName" /></div>
       <div class="field"><label>Teléfono / WhatsApp *</label><input id="phone" inputmode="tel" autocomplete="tel" /></div>
       <div class="field"><label>Correo electrónico</label><input id="email" type="email" autocomplete="email" /></div>
-      <div class="field full"><label>Dirección del establecimiento *</label><input id="address" autocomplete="street-address" placeholder="Calle, número, colonia, municipio" /></div>
+      <div class="field full"><label>Calle y número *</label><input id="address" autocomplete="street-address" placeholder="Ej. Av. Revolución 1234" /></div>
+      <div class="field"><label>Colonia *</label><input id="colony" placeholder="Ej. Centro" /></div>
+      <div class="field"><label>Municipio *</label><input id="municipality" placeholder="Ej. San Pedro Tlaquepaque" /></div>
       <div class="field"><label>Código postal</label><input id="postalCode" inputmode="numeric" /></div>
       <div class="field"><label>Envíos aproximados al mes</label><input id="estimatedMonthlyOrders" type="number" min="0" placeholder="Ej. 40" /></div>
     </div>
@@ -48,11 +50,11 @@ let leadId=null, planSelected=false, pricingReached=false, abandoning=false;
 const $=id=>document.getElementById(id);
 async function json(url,opts={}){const r=await fetch(url,{...opts,headers:{'Content-Type':'application/json',...(opts.headers||{})}});if(!r.ok)throw new Error((await r.json().catch(()=>({}))).error||'No fue posible continuar');return r.json()}
 $('continueBtn').onclick=async()=>{
- const fullName=$('fullName').value.trim(),phone=$('phone').value.trim(),address=$('address').value.trim();
- if(!fullName||!phone||!address){alert('Completa nombre, teléfono y dirección.');return}
+ const fullName=$('fullName').value.trim(),phone=$('phone').value.trim(),address=$('address').value.trim(),colony=$('colony').value.trim(),municipality=$('municipality').value.trim();
+ if(!fullName||!phone||!address||!colony||!municipality){alert('Completa nombre, teléfono, calle y número, colonia y municipio.');return}
  const b=$('continueBtn');b.disabled=true;b.textContent='Guardando...';
  try{
-  const payload={fullName,businessName:$('businessName').value.trim(),phone,email:$('email').value.trim(),address,postalCode:$('postalCode').value.trim(),estimatedMonthlyOrders:Number($('estimatedMonthlyOrders').value||0)};
+  const payload={fullName,businessName:$('businessName').value.trim(),phone,email:$('email').value.trim(),address,colony,municipality,postalCode:$('postalCode').value.trim(),estimatedMonthlyOrders:Number($('estimatedMonthlyOrders').value||0)};
   const data=await json(API+'/public/registration/customer',{method:'POST',body:JSON.stringify(payload)});leadId=data.id;
   await json(API+'/public/registration/'+leadId+'/pricing-viewed',{method:'POST',body:'{}'});
   pricingReached=true;$('step1').classList.add('hidden');$('step2').classList.remove('hidden');$('p2').classList.add('on');window.scrollTo({top:0,behavior:'smooth'});
