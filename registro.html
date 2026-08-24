@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Registro de clientes | TiempoLibre</title>
+<link rel="icon" href="favicon_32.png" />
+<style>
+:root{--brand:#0097bd;--brand2:#063aa8;--ink:#13213c;--muted:#68758b;--bg:#f5f8fc;--card:#fff;--line:#dbe4ef}*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:linear-gradient(140deg,#f7fbff,#eef4ff);color:var(--ink)}.wrap{max-width:1050px;margin:auto;padding:34px 20px 60px}.head{text-align:center;margin-bottom:28px}.logo{font-size:32px;font-weight:900;color:var(--brand2);letter-spacing:-1px}.logo span{color:var(--brand)}h1{font-size:34px;margin:14px 0 8px}.sub{color:var(--muted);max-width:660px;margin:auto}.progress{display:flex;gap:8px;max-width:520px;margin:24px auto}.progress i{height:7px;border-radius:99px;background:#dbe5f0;flex:1}.progress i.on{background:var(--brand)}.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:0 18px 55px rgba(26,50,87,.10);padding:28px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.field{display:flex;flex-direction:column;gap:7px}.full{grid-column:1/-1}label{font-weight:700;font-size:14px}input,select{height:48px;border:1px solid #cdd9e8;border-radius:12px;padding:0 14px;font-size:15px;background:#fff;color:var(--ink)}input:focus{outline:2px solid rgba(0,151,189,.22);border-color:var(--brand)}.actions{display:flex;justify-content:flex-end;margin-top:22px;gap:12px}.btn{border:0;border-radius:12px;padding:14px 22px;font-weight:800;cursor:pointer;font-size:15px}.primary{background:linear-gradient(135deg,var(--brand),#0876d1);color:#fff}.secondary{background:#edf4f9;color:var(--ink)}.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.plan{border:2px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;min-height:325px;transition:.2s}.plan:hover{border-color:var(--brand);transform:translateY(-2px);box-shadow:0 14px 30px rgba(19,33,60,.08)}.plan h3{font-size:23px;margin:4px 0}.price{font-size:35px;font-weight:900;color:var(--brand2);margin:10px 0}.price small{font-size:13px;color:var(--muted);font-weight:600}.plan p{color:var(--muted);font-size:14px;line-height:1.5}.plan .btn{margin-top:auto;width:100%}.tag{display:inline-flex;width:max-content;background:#e8f8fc;color:#047b9a;border-radius:99px;padding:6px 10px;font-size:11px;font-weight:900}.note{font-size:12px;color:var(--muted);margin-top:16px;text-align:center}.ok{text-align:center;padding:28px}.ok b{font-size:28px;display:block;margin-bottom:10px}.hidden{display:none!important}@media(max-width:760px){.grid,.plans{grid-template-columns:1fr}.full{grid-column:auto}h1{font-size:28px}.panel{padding:20px}.wrap{padding-top:22px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head"><div class="logo">TIEMPO<span>LIBRE</span></div><h1>Empieza a repartir con nosotros</h1><p class="sub">Registra tu negocio. Primero necesitamos conocerte y después podrás elegir el plan que mejor se adapte a tu operación.</p><div class="progress"><i id="p1" class="on"></i><i id="p2"></i></div></div>
+
+  <section id="step1" class="panel">
+    <h2>1. Datos de tu negocio</h2>
+    <div class="grid">
+      <div class="field"><label>Nombre completo *</label><input id="fullName" autocomplete="name" /></div>
+      <div class="field"><label>Nombre del establecimiento</label><input id="businessName" /></div>
+      <div class="field"><label>Teléfono / WhatsApp *</label><input id="phone" inputmode="tel" autocomplete="tel" /></div>
+      <div class="field"><label>Correo electrónico</label><input id="email" type="email" autocomplete="email" /></div>
+      <div class="field full"><label>Dirección del establecimiento *</label><input id="address" autocomplete="street-address" placeholder="Calle, número, colonia, municipio" /></div>
+      <div class="field"><label>Código postal</label><input id="postalCode" inputmode="numeric" /></div>
+      <div class="field"><label>Envíos aproximados al mes</label><input id="estimatedMonthlyOrders" type="number" min="0" placeholder="Ej. 40" /></div>
+    </div>
+    <div class="actions"><button class="btn primary" id="continueBtn">Ver planes y costos</button></div>
+    <p class="note">Tus datos se utilizan para preparar tu incorporación y validar la operación de servicio en tu zona.</p>
+  </section>
+
+  <section id="step2" class="panel hidden">
+    <h2>2. Elige tu plan</h2>
+    <p class="sub" style="margin:0 0 22px">Estos son los planes disponibles actualmente. El costo de los envíos se gestiona según tu operación y paquete contratado.</p>
+    <div class="plans">
+      <article class="plan"><span class="tag">PARA EMPEZAR</span><h3>Emprendedor</h3><div class="price">$799 <small>MXN / mes</small></div><p>Acceso a la plataforma TiempoLibre para comenzar a administrar tus solicitudes de reparto.</p><button class="btn primary choose" data-plan="EMPRENDEDOR">Elegir Emprendedor</button></article>
+      <article class="plan"><span class="tag">MÁS CAPACIDAD</span><h3>Profesional</h3><div class="price">$1,199 <small>MXN / mes</small></div><p>Para negocios con una operación de reparto más constante y necesidades de seguimiento superiores.</p><button class="btn primary choose" data-plan="PROFESIONAL">Elegir Profesional</button></article>
+      <article class="plan"><span class="tag">OPERACIÓN AVANZADA</span><h3>Empresarial</h3><div class="price">$1,999 <small>MXN / mes</small></div><p>Para establecimientos con mayor volumen y necesidades de operación, control y crecimiento.</p><button class="btn primary choose" data-plan="EMPRESARIAL">Elegir Empresarial</button></article>
+    </div>
+    <div class="actions" style="justify-content:flex-start"><button class="btn secondary" id="backBtn">Regresar</button></div>
+    <p class="note">No mostramos planes de prueba en este paso. Nuestro equipo puede ofrecer alternativas de incorporación cuando sea conveniente.</p>
+  </section>
+
+  <section id="done" class="panel ok hidden"><b>¡Registro recibido!</b><p>Gracias por elegir TiempoLibre. Nuestro equipo continuará contigo el proceso de activación.</p></section>
+</div>
+<script>
+const API='https://app.tiempolibreapp.com/api';
+let leadId=null, planSelected=false, pricingReached=false, abandoning=false;
+const $=id=>document.getElementById(id);
+async function json(url,opts={}){const r=await fetch(url,{...opts,headers:{'Content-Type':'application/json',...(opts.headers||{})}});if(!r.ok)throw new Error((await r.json().catch(()=>({}))).error||'No fue posible continuar');return r.json()}
+$('continueBtn').onclick=async()=>{
+ const fullName=$('fullName').value.trim(),phone=$('phone').value.trim(),address=$('address').value.trim();
+ if(!fullName||!phone||!address){alert('Completa nombre, teléfono y dirección.');return}
+ const b=$('continueBtn');b.disabled=true;b.textContent='Guardando...';
+ try{
+  const payload={fullName,businessName:$('businessName').value.trim(),phone,email:$('email').value.trim(),address,postalCode:$('postalCode').value.trim(),estimatedMonthlyOrders:Number($('estimatedMonthlyOrders').value||0)};
+  const data=await json(API+'/public/registration/customer',{method:'POST',body:JSON.stringify(payload)});leadId=data.id;
+  await json(API+'/public/registration/'+leadId+'/pricing-viewed',{method:'POST',body:'{}'});
+  pricingReached=true;$('step1').classList.add('hidden');$('step2').classList.remove('hidden');$('p2').classList.add('on');window.scrollTo({top:0,behavior:'smooth'});
+ }catch(e){alert(e.message||'No fue posible continuar');}finally{b.disabled=false;b.textContent='Ver planes y costos'}
+};
+$('backBtn').onclick=()=>{$('step2').classList.add('hidden');$('step1').classList.remove('hidden');$('p2').classList.remove('on')};
+document.querySelectorAll('.choose').forEach(btn=>btn.onclick=async()=>{if(!leadId)return;btn.disabled=true;try{await json(API+'/public/registration/'+leadId+'/select-plan',{method:'POST',body:JSON.stringify({plan:btn.dataset.plan})});planSelected=true;$('step2').classList.add('hidden');$('done').classList.remove('hidden');}catch(e){alert(e.message||'No fue posible seleccionar el plan');btn.disabled=false}});
+function markAbandoned(){if(!leadId||!pricingReached||planSelected||abandoning)return;abandoning=true;fetch(API+'/public/registration/'+leadId+'/abandoned',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}',keepalive:true}).catch(()=>{});}
+window.addEventListener('pagehide',markAbandoned);
+</script>
+</body>
+</html>
