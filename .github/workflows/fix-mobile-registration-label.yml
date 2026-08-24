@@ -1,0 +1,38 @@
+name: Fix mobile registration label
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-mobile-registration-label.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Restore mobile registration label
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          text = p.read_text(encoding='utf-8')
+          old = '<a href="registro.html" class="btn-ghost-nav mobile-register">Registrarme</a>'
+          new = '<a href="registro.html" class="btn-ghost-nav mobile-register">Quiero usar TiempoLibre</a>'
+          if old not in text:
+              raise SystemExit('No se encontró el botón móvil Registrarme; no se modificó index.html')
+          p.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+      - name: Commit label fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "fix: restaurar texto de registro en móvil"
+          git push origin main
