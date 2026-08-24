@@ -1,0 +1,39 @@
+name: Patch registration menu
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/patch-registration-menu.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-menu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Replace WhatsApp recruitment link
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          text = p.read_text(encoding='utf-8')
+          old = '<a href="https://wa.me/523312318201" target="_blank" rel="noopener">ÚNETE AL EQUIPO</a>'
+          new = '<a href="registro.html">Quiero usar TiempoLibre</a>\n      <a href="repartidores.html">Quiero repartir</a>'
+          count = text.count(old)
+          if count != 1:
+              raise SystemExit(f'Se esperaba 1 enlace de reclutamiento y se encontraron {count}. No se modificó el archivo.')
+          p.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+      - name: Commit landing change
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Conecta registros de clientes y repartidores"
+          git push origin main
