@@ -450,8 +450,16 @@
   .modal-box-generic p,.modal-box-generic li{color:var(--ink-dim);font-size:0.92rem;margin-bottom:8px;}
   .modal-box-generic ul{padding-left:20px;}
 </style>
+<meta name="theme-color" content="#0C94AA">
+<link rel="canonical" href="https://tiempolibreapp.com/">
+<meta property="og:type" content="website"><meta property="og:locale" content="es_MX">
+<meta property="og:title" content="TiempoLibre — Sistema de reparto para tu negocio">
+<meta property="og:description" content="Organiza entregas, repartidores y clientes con una plataforma y un equipo local que te acompaña. Guadalajara y Zapopan.">
+<meta property="og:url" content="https://tiempolibreapp.com/">
+<meta property="og:image" content="https://tiempolibreapp.com/assets/entregas-locales.webp">
+<link rel="stylesheet" href="assets/editorial-20261026.css">
 </head>
-<body>
+<body class="tl-editorial"><a class="tl-skip" href="#top">Saltar al contenido</a>
 
 <div class="topbar">¿Tienes dudas? Escríbenos por <a href="https://wa.me/523312318201" target="_blank" rel="noopener">WhatsApp</a> — te respondemos en persona, no con un bot.</div>
 
@@ -461,7 +469,8 @@
       <img src="favicon_512.png" width="512" height="512" decoding="async" fetchpriority="high" alt="TiempoLibre" class="logo-img">
       <span class="logo-text">Tiempo<span>Libre</span></span>
     </a>
-    <div class="navlinks">
+    <button class="tl-menu" id="tl-menu" type="button" aria-controls="tl-navigation" aria-expanded="false">Menú <span aria-hidden="true">☰</span></button>
+    <div class="tl-navigation" id="tl-navigation"><div class="navlinks">
       <a href="#como-funciona">Cómo funciona</a>
       <a href="#planes">Planes</a>
       <a href="registro.html">Quiero usar TiempoLibre</a>
@@ -474,6 +483,7 @@
       <a href="https://application.tiempolibreapp.com/login" target="_blank" rel="noopener" class="btn-ghost-nav" id="login-link">Iniciar sesión</a>
       <a href="#registro" class="nav-cta">Contacto</a>
     </div>
+    </div>
   </nav>
 </header>
 
@@ -485,44 +495,21 @@
       <div>
         <span class="eyebrow">Sistema de reparto para tu negocio</span>
         <h1>Tu logística, <span>resuelta por personas reales.</span></h1>
-        <p class="lead">TiempoLibre es la plataforma con la que tu negocio organiza entregas, repartidores y clientes desde un solo lugar — con un equipo local que te acompaña, no un chatbot.</p>
+        <p class="lead">Organiza tus entregas, conecta con repartidores aliados y da seguimiento a cada pedido. Tecnología para tu operación, con un equipo local que te acompaña.</p>
         <div class="cta-row">
           <a href="#registro" class="btn btn-primary">Hablar con ventas</a>
           <a href="#como-funciona" class="btn btn-ghost">Ver cómo funciona</a>
         </div>
       </div>
-      <div class="hero-card">
-        <div class="hc-row">
-          <div>
-            <div class="hc-tag">Pedido #4821</div>
-          </div>
-          <span class="hc-status">En ruta</span>
-        </div>
-        <div class="hc-route">
-          <div class="hc-point done">
-            <span class="hc-dot"></span>
-            <div><h4>Pedido recibido</h4><p>Ferretería El Clavo</p></div>
-          </div>
-          <div class="hc-point done">
-            <span class="hc-dot"></span>
-            <div><h4>Repartidor asignado</h4><p>Equipo de reparto en camino al punto de recolección</p></div>
-          </div>
-          <div class="hc-point">
-            <span class="hc-dot"></span>
-            <div><h4>En camino al cliente</h4><p>Rastreo en vivo disponible</p></div>
-          </div>
-          <div class="hc-point pending">
-            <span class="hc-dot"></span>
-            <div><h4>Entregado</h4><p>Pendiente</p></div>
-          </div>
-        </div>
-      </div>
+      <figure class="tl-hero-photo"><img src="assets/entregas-locales.webp" width="1536" height="1024" fetchpriority="high" decoding="async" alt="Imagen conceptual de un repartidor y una comerciante coordinando la entrega de un paquete"><figcaption><span class="tl-photo-kicker">DE TU NEGOCIO A SU PUERTA</span><strong>Personas que conectan<br>cada entrega.</strong></figcaption></figure>
     </div>
   </section>
 
+  <div class="tl-service-strip"><div class="wrap"><span><b>01</b> Plataforma para tu operación</span><span><b>02</b> Repartidores aliados</span><span><b>03</b> Guadalajara y Zapopan</span></div></div>
   <!-- COMO FUNCIONA -->
   <section id="como-funciona">
     <div class="wrap">
+      <div class="tl-section-intro"><div><span class="eyebrow">ENTREGAS CON DIRECCIÓN</span><h2>De tu mostrador<br>a la puerta de tu cliente.</h2></div><p>Un proceso claro para coordinar tus pedidos y mantener a todos conectados.</p></div>
       <div class="proceso-top">
         <div class="proceso-highlight">
           <span class="badge-diferenciador">Lo que nos diferencia</span>
@@ -532,9 +519,9 @@
             <li>Tarifa fija.</li>
           </ul>
         </div>
-        <div class="recruit-card">
-          <img src="repartidores.webp" width="1024" height="1536" loading="lazy" decoding="async" alt="Repartidor TiempoLibre" class="recruit-img">
-        </div>
+        <figure class="recruit-card">
+          <img src="assets/negocio-local.webp" width="1536" height="1024" loading="lazy" decoding="async" alt="Imagen conceptual de una comerciante preparando un pedido para entrega" class="recruit-img"><figcaption>Tu negocio prepara el pedido.<br><strong>TiempoLibre conecta la entrega.</strong></figcaption>
+        </figure>
       </div>
       <span class="eyebrow" style="margin-bottom:24px;">El proceso</span>
       <div class="process-grid">
@@ -658,6 +645,7 @@
     </div>
   </section>
 
+  <section class="tl-driver-section" aria-labelledby="tl-driver-title"><div class="wrap"><div class="tl-driver-card"><figure><img src="assets/repartidor-aliado.webp" width="1536" height="1024" loading="lazy" decoding="async" alt="Imagen conceptual de un repartidor aliado junto a una motocicleta estacionada"></figure><div class="tl-driver-copy"><span class="eyebrow">TAMBIÉN HAY UN CAMINO PARA TI</span><h2 id="tl-driver-title">¿Quieres repartir<br>con TiempoLibre?</h2><p>Conoce el proceso de incorporación, registra tus datos e indica las colonias donde te interesa trabajar. Tu solicitud será revisada por nuestro equipo.</p><a class="btn btn-primary" href="repartidores.html">Quiero ser repartidor <span aria-hidden="true">↗</span></a><small>La incorporación está sujeta a revisión y asignación de zona.</small></div></div></div></section>
   <!-- FORMULARIO -->
   <section id="registro" style="background:var(--bg-alt);">
     <div class="wrap">
@@ -732,9 +720,10 @@
         <a href="#como-funciona">Cómo funciona</a>
         <a href="#planes">Planes</a>
         <a href="#" id="open-privacy-2">Aviso de privacidad</a>
-        <a href="https://tiempolibreapp.com" target="_blank" rel="noopener">Ir a la app</a>
+        <a href="https://application.tiempolibreapp.com/login" target="_blank" rel="noopener">Ir a la app</a>
       </div>
     </div>
+    <p class="tl-image-note">Imágenes conceptuales generadas con IA para ilustrar el servicio. No corresponden a personal, repartidores o negocios específicos de TiempoLibre.</p>
     <div class="foot-bottom">
       <span>© 2026 TiempoLibre. Todos los derechos reservados.</span>
       <span><a href="#" id="open-privacy-3">Aviso de privacidad</a></span>
@@ -1054,5 +1043,15 @@
   });
 </script>
 
+<script>
+(() => {
+  const button = document.getElementById('tl-menu');
+  const panel = document.getElementById('tl-navigation');
+  const close = () => { button.setAttribute('aria-expanded','false'); panel.classList.remove('open'); };
+  button.addEventListener('click', () => { const open = button.getAttribute('aria-expanded') !== 'true'; button.setAttribute('aria-expanded',String(open)); panel.classList.toggle('open',open); });
+  panel.querySelectorAll('a').forEach(a => a.addEventListener('click',close));
+  document.addEventListener('keydown',e => { if(e.key === 'Escape' && button.getAttribute('aria-expanded') === 'true'){close();button.focus();} });
+})();
+</script>
 </body>
 </html>
