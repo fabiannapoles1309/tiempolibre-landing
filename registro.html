@@ -13,4 +13,5 @@ document.querySelectorAll('.choose').forEach(b=>b.onclick=async()=>{plan=b.datas
 document.querySelectorAll('input[name=payment]').forEach(input=>input.addEventListener('change',()=>{void trackPayment(input.value)}));$('terms').addEventListener('change',()=>{void trackLegal()});$('privacy').addEventListener('change',()=>{void trackLegal()});
 $('finish').onclick=async()=>{let payment=document.querySelector('input[name=payment]:checked')?.value;if(!payment)return alert('Selecciona una forma de pago.');if(!$('terms').checked||!$('privacy').checked)return alert('Para continuar debes aceptar los Términos y Condiciones y el Aviso de Privacidad.');try{await post('/public/registration/'+leadId+'/complete',{plan,paymentMethod:payment,termsAccepted:true,privacyAccepted:true,acceptedAt:new Date().toISOString()});finished=true;$('s3').classList.add('hidden');$('done').classList.remove('hidden')}catch(e){alert(e.message)}};
 window.addEventListener('pagehide',()=>{if(leadId&&pricing&&!finished){const headers={'Content-Type':'application/json'};if(leadToken)headers['X-Registration-Token']=leadToken;fetch(API+'/public/registration/'+leadId+'/abandoned',{method:'POST',headers,body:'{}',keepalive:true}).catch(()=>{})}});
-</script></body></html>
+</script><script defer src="cookies.js"></script>
+</body></html>
