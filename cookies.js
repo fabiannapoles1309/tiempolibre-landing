@@ -14,11 +14,14 @@
         && typeof item.decidedAt === "string" ? item : null;
     } catch { return null; }
   };
+  const host = document.querySelector("[data-tl-cookie-host]");
+  if (!host) return;
+  const registration = host.hasAttribute("data-tl-registration-complete");
   const style = document.createElement("style");
   style.textContent = `
-    #tl-cookie-panel { position:fixed;z-index:9000;left:12px;right:12px;bottom:12px;margin:auto;
+    #tl-cookie-panel { margin:18px auto 0;text-align:left;
       max-width:720px;box-sizing:border-box;background:#fff;color:#142037;border:1px solid #d7e2ed;
-      box-shadow:0 12px 42px #14203738;border-radius:15px;padding:20px;
+      border-radius:15px;padding:20px;
       font:14px/1.6 system-ui,-apple-system,sans-serif; }
     #tl-cookie-panel[hidden], #tl-cookie-reopen[hidden] {display:none!important}
     #tl-cookie-panel h2{font-size:18px;line-height:1.3;margin:0 0 8px;font-weight:700;color:#13213c}
@@ -32,9 +35,8 @@
       color:white;border-radius:9px;padding:9px 13px;font:600 13px system-ui;cursor:pointer}
     #tl-cookie-panel button.tl-secondary{background:white;color:#0a6372}
     #tl-cookie-panel button:focus-visible,#tl-cookie-reopen:focus-visible{outline:3px solid #5fc7d6;outline-offset:2px}
-    #tl-cookie-reopen{position:fixed;z-index:8999;left:12px;bottom:12px;
-      padding:8px 12px;box-shadow:0 3px 14px #14203728}
-    @media (max-width:550px) { #tl-cookie-panel{padding:14px;bottom:7px;left:7px;right:7px}
+    #tl-cookie-reopen{margin-top:12px;padding:8px 12px;background:none;color:#0a6372;border:0;text-decoration:underline}
+    @media (max-width:550px) { #tl-cookie-panel{padding:14px}
        #tl-cookie-panel .tl-cookie-actions button{flex:1 1 auto} }
   `;
   document.head.append(style);
@@ -42,7 +44,8 @@
   function init() {
     const panel = document.createElement("section");
     panel.id = "tl-cookie-panel";
-    panel.setAttribute("role", "dialog");
+    panel.setAttribute("role", "region");
+    panel.hidden = true;
     panel.setAttribute("aria-label", "Preferencias de privacidad y cookies");
     panel.innerHTML = `
       <h2>Tu privacidad es importante</h2>
@@ -66,7 +69,8 @@
     reopen.id = "tl-cookie-reopen";
     reopen.textContent = "Privacidad y cookies";
     reopen.setAttribute("aria-label", "Cambiar preferencias de cookies");
-    document.body.append(panel, reopen);
+    reopen.hidden = registration;
+    host.append(panel, reopen);
 
     const byId = (id) => document.getElementById(id);
     const analytics = byId("tl-cookie-analytics");
@@ -98,13 +102,22 @@
     byId("tl-cookie-settings").addEventListener("click", () => show(true));
     byId("tl-cookie-save").addEventListener("click", () => save(analytics.checked, marketing.checked));
     reopen.addEventListener("click", () => show(true));
-    window.addEventListener("storage", (event) => {
-      if (event.key !== key) return;
+    let completed = false;
+    function registrationComplete() {
+      completed = true;
       if (read()) { panel.hidden = true; reopen.hidden = false; }
       else show(false);
+    }
+    if (registration) {
+      window.addEventListener("tiempolibre:registration-completed", registrationComplete);
+      if (!host.classList.contains("hidden")) registrationComplete();
+    }
+    window.addEventListener("storage", (event) => {
+      if (event.key !== key || (registration && !completed)) return;
+      if (read()) { panel.hidden = true; reopen.hidden = false; }
+      else if (registration) show(false);
+      else { panel.hidden = true; reopen.hidden = false; }
     });
-    if (read()) { panel.hidden = true; reopen.hidden = false; }
-    else show(false);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
   else init();
