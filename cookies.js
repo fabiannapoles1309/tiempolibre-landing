@@ -1,5 +1,4 @@
-// TiempoLibre: preferencias opcionales de cookies en la landing.
-// Las cookies estrictamente necesarias no pueden deshabilitarse.
+// TiempoLibre: preferencias de cookies únicamente dentro de los registros públicos.
 // Ningún pixel de marketing o analítica se carga desde este archivo.
 (() => {
   "use strict";
@@ -14,97 +13,82 @@
         && typeof item.decidedAt === "string" ? item : null;
     } catch { return null; }
   };
-  const style = document.createElement("style");
-  style.textContent = `
-    #tl-cookie-panel { position:fixed;z-index:9000;left:12px;right:12px;bottom:12px;margin:auto;
-      max-width:720px;box-sizing:border-box;background:#fff;color:#142037;border:1px solid #d7e2ed;
-      box-shadow:0 12px 42px #14203738;border-radius:15px;padding:20px;
-      font:14px/1.6 system-ui,-apple-system,sans-serif; }
-    #tl-cookie-panel[hidden], #tl-cookie-reopen[hidden] {display:none!important}
-    #tl-cookie-panel h2{font-size:18px;line-height:1.3;margin:0 0 8px;font-weight:700;color:#13213c}
-    #tl-cookie-panel p{margin:0;color:#48566b}
-    #tl-cookie-panel a{color:#076c94;text-decoration:underline}
-    #tl-cookie-panel .tl-cookie-options{display:grid;gap:8px;margin-top:12px;padding:12px;
-      border:1px solid #dbe4ef;border-radius:10px}
-    #tl-cookie-panel .tl-cookie-options label{display:flex;align-items:center;gap:9px;cursor:pointer}
-    #tl-cookie-panel .tl-cookie-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
-    #tl-cookie-panel button,#tl-cookie-reopen{border:1px solid #0c94aa;background:#0c94aa;
-      color:white;border-radius:9px;padding:9px 13px;font:600 13px system-ui;cursor:pointer}
-    #tl-cookie-panel button.tl-secondary{background:white;color:#0a6372}
-    #tl-cookie-panel button:focus-visible,#tl-cookie-reopen:focus-visible{outline:3px solid #5fc7d6;outline-offset:2px}
-    #tl-cookie-reopen{position:fixed;z-index:8999;left:12px;bottom:12px;
-      padding:8px 12px;box-shadow:0 3px 14px #14203728}
-    @media (max-width:550px) { #tl-cookie-panel{padding:14px;bottom:7px;left:7px;right:7px}
-       #tl-cookie-panel .tl-cookie-actions button{flex:1 1 auto} }
-  `;
-  document.head.append(style);
 
   function init() {
-    const panel = document.createElement("section");
+    // No UI, storage writes or floating elements outside registration.
+    const page = location.pathname.split("/").pop();
+    const selector = page === "registro.html" ? "#s3 .legal"
+      : page === "repartidores.html" ? "#form .legal" : null;
+    if (!selector) return;
+    const legal = document.querySelector(selector);
+    if (!legal || document.getElementById("tl-cookie-panel")) return;
+
+    const style = document.createElement("style");
+    style.textContent = `
+      #tl-cookie-panel { margin-top:16px;padding:14px;border:1px solid #dbe4ef;border-radius:12px;
+        color:#142037;background:#f8fbff;font:14px/1.5 system-ui,-apple-system,sans-serif; }
+      #tl-cookie-panel legend { font-weight:700;padding:0 6px }
+      #tl-cookie-panel p { margin:0 0 10px;color:#48566b }
+      #tl-cookie-panel a { color:#076c94;text-decoration:underline }
+      #tl-cookie-panel label { display:flex;align-items:center;gap:9px;font-weight:500;margin:8px 0 }
+      #tl-cookie-panel input[type=checkbox] { min-height:0;width:auto;padding:0;margin:0;flex:none }
+      #tl-cookie-panel .tl-cookie-actions { display:flex;gap:8px;flex-wrap:wrap;margin-top:12px }
+      #tl-cookie-panel button { border:1px solid #0c94aa;background:#0c94aa;color:white;
+        border-radius:9px;padding:9px 13px;font:600 13px system-ui;cursor:pointer }
+      #tl-cookie-panel button.tl-secondary { background:white;color:#0a6372 }
+      #tl-cookie-panel button:focus-visible { outline:3px solid #5fc7d6;outline-offset:2px }
+      #tl-cookie-status { margin:8px 0 0;font-size:12px }
+    `;
+    document.head.append(style);
+    const panel = document.createElement("fieldset");
     panel.id = "tl-cookie-panel";
-    panel.setAttribute("role", "dialog");
-    panel.setAttribute("aria-label", "Preferencias de privacidad y cookies");
     panel.innerHTML = `
-      <h2>Tu privacidad es importante</h2>
-      <p>Utilizamos tecnologías necesarias para la seguridad y el funcionamiento de TiempoLibre.
-      Las estadísticas y la publicidad opcionales solo podrán activarse con tu elección.
-      Consulta nuestro <a href="/privacidad.html" target="_blank" rel="noopener noreferrer">Aviso de Privacidad</a>.</p>
-      <div class="tl-cookie-options" id="tl-cookie-options" hidden>
-        <div><strong>Necesarias:</strong> siempre activas</div>
-        <label><input type="checkbox" id="tl-cookie-analytics"> Estadísticas opcionales</label>
-        <label><input type="checkbox" id="tl-cookie-marketing"> Publicidad y marketing opcionales</label>
-      </div>
+      <legend>Privacidad y cookies (opcional)</legend>
+      <p>Las tecnologías necesarias para seguridad y funcionamiento permanecen activas.
+      Las estadísticas y publicidad opcionales solo se activarán con tu elección.
+      Consulta el <a href="/privacidad.html" target="_blank" rel="noopener noreferrer">Aviso de Privacidad</a>.</p>
+      <label><input type="checkbox" id="tl-cookie-analytics"> Estadísticas opcionales</label>
+      <label><input type="checkbox" id="tl-cookie-marketing"> Publicidad y marketing opcionales</label>
       <div class="tl-cookie-actions">
         <button type="button" class="tl-secondary" id="tl-cookie-reject">Rechazar opcionales</button>
-        <button type="button" class="tl-secondary" id="tl-cookie-settings">Configurar</button>
-        <button type="button" id="tl-cookie-accept">Aceptar todas</button>
-        <button type="button" id="tl-cookie-save" hidden>Guardar preferencias</button>
+        <button type="button" id="tl-cookie-save">Guardar preferencias</button>
       </div>
+      <p id="tl-cookie-status" role="status">No es necesario aceptar cookies opcionales para completar tu registro.</p>
     `;
-    const reopen = document.createElement("button");
-    reopen.type = "button";
-    reopen.id = "tl-cookie-reopen";
-    reopen.textContent = "Privacidad y cookies";
-    reopen.setAttribute("aria-label", "Cambiar preferencias de cookies");
-    document.body.append(panel, reopen);
+    legal.after(panel);
 
     const byId = (id) => document.getElementById(id);
     const analytics = byId("tl-cookie-analytics");
     const marketing = byId("tl-cookie-marketing");
-    function show(showSettings) {
+    const status = byId("tl-cookie-status");
+    const sync = () => {
       const existing = read();
       analytics.checked = existing?.analytics ?? false;
       marketing.checked = existing?.marketing ?? false;
-      panel.hidden = false;
-      reopen.hidden = true;
-      byId("tl-cookie-options").hidden = !showSettings;
-      byId("tl-cookie-settings").hidden = showSettings;
-      byId("tl-cookie-accept").hidden = showSettings;
-      byId("tl-cookie-save").hidden = !showSettings;
-    }
+    };
     function save(analyticsEnabled, marketingEnabled) {
       const pref = {
         version, necessary: true, analytics: analyticsEnabled, marketing: marketingEnabled,
         decidedAt: new Date().toISOString(),
       };
-      try { localStorage.setItem(key, JSON.stringify(pref)); }
-      catch { /* Respetar la decisión durante la visita aun sin storage. */ }
+      try {
+        localStorage.setItem(key, JSON.stringify(pref));
+        status.textContent = "Preferencias guardadas. Puedes cambiarlas cuando quieras.";
+      } catch {
+        status.textContent = "No se pudieron guardar las preferencias. No se modificó tu elección anterior.";
+        sync();
+        return;
+      }
+      analytics.checked = analyticsEnabled;
+      marketing.checked = marketingEnabled;
       window.dispatchEvent(new CustomEvent("tiempolibre:cookie-preferences-updated", { detail: pref }));
-      panel.hidden = true;
-      reopen.hidden = false;
     }
     byId("tl-cookie-reject").addEventListener("click", () => save(false, false));
-    byId("tl-cookie-accept").addEventListener("click", () => save(true, true));
-    byId("tl-cookie-settings").addEventListener("click", () => show(true));
     byId("tl-cookie-save").addEventListener("click", () => save(analytics.checked, marketing.checked));
-    reopen.addEventListener("click", () => show(true));
     window.addEventListener("storage", (event) => {
-      if (event.key !== key) return;
-      if (read()) { panel.hidden = true; reopen.hidden = false; }
-      else show(false);
+      if (event.key === key || event.key === null) sync();
     });
-    if (read()) { panel.hidden = true; reopen.hidden = false; }
-    else show(false);
+    sync();
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
   else init();
