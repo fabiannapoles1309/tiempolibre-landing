@@ -1,10 +1,15 @@
 const fs = require("node:fs");
 const assert = require("node:assert/strict");
 const js = fs.readFileSync("cookies.js", "utf8");
-for (const path of ["index.html","registro.html","repartidores.html","privacidad.html","terminos.html"]) {
+for (const path of ["index.html","registro.html","repartidores.html","terminos.html"]) {
   const html = fs.readFileSync(path, "utf8");
-  assert.match(html, /<script defer src="cookies\.js"><\/script>/, path);
+  assert.doesNotMatch(html, /<script[^>]+src="cookies\.js(?:\?[^"]*)?"/, path);
 }
+const privacy = fs.readFileSync("privacidad.html", "utf8");
+assert.match(privacy, /data-tl-cookie-host/);
+assert.match(privacy, /<script defer src="cookies\.js\?v=2"><\/script>/);
+assert.doesNotMatch(js, /position\s*:\s*fixed/);
+assert.match(js, /panel\.hidden = true/);
 assert.match(js, /tiempolibre_cookie_preferences_v1/);
 assert.match(js, /Rechazar opcionales/);
 assert.match(js, /Aceptar todas/);
