@@ -16,14 +16,13 @@
   };
   const host = document.querySelector("[data-tl-cookie-host]");
   if (!host) return;
-  const registration = host.hasAttribute("data-tl-registration-complete");
   const style = document.createElement("style");
   style.textContent = `
     #tl-cookie-panel { margin:18px auto 0;text-align:left;
       max-width:720px;box-sizing:border-box;background:#fff;color:#142037;border:1px solid #d7e2ed;
       border-radius:15px;padding:20px;
       font:14px/1.6 system-ui,-apple-system,sans-serif; }
-    #tl-cookie-panel[hidden], #tl-cookie-reopen[hidden] {display:none!important}
+    #tl-cookie-panel[hidden], #tl-cookie-panel [hidden], #tl-cookie-reopen[hidden] {display:none!important}
     #tl-cookie-panel h2{font-size:18px;line-height:1.3;margin:0 0 8px;font-weight:700;color:#13213c}
     #tl-cookie-panel p{margin:0;color:#48566b}
     #tl-cookie-panel a{color:#076c94;text-decoration:underline}
@@ -69,7 +68,7 @@
     reopen.id = "tl-cookie-reopen";
     reopen.textContent = "Privacidad y cookies";
     reopen.setAttribute("aria-label", "Cambiar preferencias de cookies");
-    reopen.hidden = registration;
+    reopen.hidden = false;
     host.append(panel, reopen);
 
     const byId = (id) => document.getElementById(id);
@@ -102,21 +101,10 @@
     byId("tl-cookie-settings").addEventListener("click", () => show(true));
     byId("tl-cookie-save").addEventListener("click", () => save(analytics.checked, marketing.checked));
     reopen.addEventListener("click", () => show(true));
-    let completed = false;
-    function registrationComplete() {
-      completed = true;
-      if (read()) { panel.hidden = true; reopen.hidden = false; }
-      else show(false);
-    }
-    if (registration) {
-      window.addEventListener("tiempolibre:registration-completed", registrationComplete);
-      if (!host.classList.contains("hidden")) registrationComplete();
-    }
     window.addEventListener("storage", (event) => {
-      if (event.key !== key || (registration && !completed)) return;
-      if (read()) { panel.hidden = true; reopen.hidden = false; }
-      else if (registration) show(false);
-      else { panel.hidden = true; reopen.hidden = false; }
+      if (event.key !== key) return;
+      panel.hidden = true;
+      reopen.hidden = false;
     });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
